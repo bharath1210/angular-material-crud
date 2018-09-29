@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +8,24 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-login: any = {};
+  login: any = {};
   constructor(
-    private loginServ: LoginService
+    private loginServ: LoginService,
+    private router: Router
   ) { }
 
-userLogin() {
-  console.log(this.login)
-  this.loginServ.postLogin(this.login)
-  .subscribe((data) => {
-    console.log(data);
-  },
-  (error) => {
-    console.log(error);
-  });
-}
+  userLogin() {
+    console.log(this.login);
+    this.loginServ.postLogin(this.login)
+
+      .subscribe((data: any) => {
+        localStorage.setItem('tokenId', data.token);
+        this.router.navigate(['/create']);
+      },
+        (error) => {
+          console.log(error);
+        });
+  }
 
   ngOnInit() {
   }

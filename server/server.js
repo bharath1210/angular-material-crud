@@ -6,19 +6,34 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const PORT = 3000;
+const jwt = require('jsonwebtoken');
 
 const loginRoutes = require('./routes/login');
 const signupRoutes = require('./routes/signup');
 const bookRoutes = require('./routes/book')
 const server = require('./db');
 
-app.use(cors()); 
+app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
+app.use(signupRoutes)
+app.use(loginRoutes)
+app.use((req, res, next) => {
+    const token = req.headers.Authorization || req.headers.authorization;
+    console.log(token)
+    jwt.verify(token, 'bkn', (err, decoded) => {
+        if(err) {
+            return res.status(400).json(err)
+        }
+        next()
+    })
+   
+})
 
-app.use('', loginRoutes)
-app.use('', signupRoutes)
+
+
+
 app.use('', bookRoutes)
 
 app.listen(PORT, () => {

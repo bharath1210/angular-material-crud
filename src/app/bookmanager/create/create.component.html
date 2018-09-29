@@ -1,3 +1,21 @@
-<p>
-  create works!
-</p>
+<div fxFlex="row">
+  <div fxFlex fxLayout="column" style="margin-top: 8vw">
+    
+      <form name="myForm" #myForm="ngForm" (ngSubmit)="createBook()" fxLayout="column" fxFlexAlign="center">
+        <mat-form-field>
+          <input type="text" [(ngModel)]="user.ISBN" matInput placeholder="ISBN" required name="ISBN">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" [(ngModel)]="user.Author" matInput placeholder="Author" required name="Author">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" [(ngModel)]="user.Title" matInput placeholder="Title" required name="Title">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="month" [(ngModel)]="user.Year" matInput placeholder="Date" required name="Year">
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="accent" [disabled]="myForm.invalid">Create</button>
+      </form>
+    
+  </div>
+</div>

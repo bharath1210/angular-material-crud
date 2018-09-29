@@ -44,7 +44,7 @@ router.post('/login', (req, res, next) => {
             if (!token) {
                 throw new Error('invalid token')
             }
-            res.json(token)
+            res.status(200).json({token:token})
         })
         .catch((error) => {
             res.status(400).json({error: error.message})
