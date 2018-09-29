@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
   ) { }
   logout() {
     localStorage.setItem('tokenId', '');
-  s.router.navigate(['/login']);
+  this.router.navigate(['/login']);
   }
   ngOnInit() {
   }
